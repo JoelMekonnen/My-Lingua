@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+{% block content %}
+<div class="row">
+   <div class = "col-lg-4" style="background-color:#e6fdff">
+      {% for feedback in feedbacks  %}
+         {% if not feedback.has_response %}
+          <div class="feedbackRow">
+            <h3>{{feedback.feedbackTitle }}</h3>
+            <p>{{feedback.feedbackDescription}}</p>
+            <h5>issued by: {{feedback.createdBy.instructor.username}}</h5>
+             <hr> 
+            <form method="POST">
+               <input type="hidden" name="response" value="{{feedback.id}}"/>
+               {% csrf_token %}
+               <div class="form-group">
+                  {%placeHolder adminForm.feedbackTitle 'Subject' 'form-control adminFeedback' %} 
+               </div>
+               <div class="form-group">
+                  {%placeHolder adminForm.feedbackDescription 'Subject' 'form-control adminFeedback' %} 
+               </div>
+               <input type ="submit" name='btn_{{feedback.id}}' value='submit'/>
+            </form>
+          </div>
+         {% endif %}
+      {% endfor %}
+   </div>
+   <div class="col-lg-8 ml-auto" style="margin-top:100px;">
+        <div class="container">
+           <div class="row justify-content-center">
+              <div class="col-lg-3 statsRow" style="margin-top:30px;">
+                   <h3 class = "bigNumber">{{stats.stdCount}}</h3> <br/>
+                   <h4 class = "bigNumberSub"> Student Count </h4>
+              </div>
+              <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.courseCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Course Count </h4>
+             </div>
+             <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.insCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Instructor Count </h4>
+          </div>
+         </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.certCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Certificate Count </h4>
+          </div>
+          </div>
+          <div class = "row justify-content-center" style="background-color:#e6fdff;border-radius:30px;">
+               <div class = "col-lg-3 buttonRow">
+                  <div class = "row justify-content-center">
+                     <img src = '{% static "images/Pratices.png" %}' width = "70px" height="70px"/>
+                  </div>
+                  <div class="row justify-content-center">
+                     <h5> Courses </h5>
+                  </div>
+               </div>
+               <div class = "col-lg-3 buttonRow">
+                  <div class = "row justify-content-center">
+                     <img src = '{% static "images/Progress.png" %}' width = "70px" height="70px"/>
+                  </div>
+                  <div class="row justify-content-center">
+                     <h5> user management</h5>
+                  </div>
+                   
+               </div>
+               <div class = "col-lg-3 buttonRow">
+                  <div class = "row justify-content-center">
+                     <img src = '{% static "images/certificates.png" %}' width = "70px" height="70px"/>
+                  </div>
+                  <div class="row justify-content-center">
+                     <h5> site management</h5>
+                  </div>
+                   
+               </div>
+          </div>
+           </div>
+   </div>
+   </div>
+</div>
+    
+{% endblock content %}
+<!-- <h1> {{stats.stdCount}} </h1>
+        <h1>{{stats.courseCount}}</h1>
+        <h1>{{stats.insCount}}</h1>
+        <h1>{{stats.certCount}}</h1> -->

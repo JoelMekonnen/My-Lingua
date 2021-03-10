@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    {% for course in courses %}
+        <!-- <img src='localhost:8000/media/{{course.courseImage}}'/> -->
+        <h1>{{course.courseName}}</h1>
+        <p>{{course.courseDescription}}</p>
+    {% endfor %}
+</div>
+<div class="row">
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="create"/>
+    </form>
+</div>
+{% endblock content %}

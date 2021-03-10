@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <title>My Lingua:Language App</title>
+    <link rel = "stylesheet" href = "{% static '/css/bootstrap.min.css' %}"> 
+   <link rel = "stylesheet" href = "{% static '/css/mdb.min.css' %}"> 
+    <link rel = "stylesheet" href = "{% static '/css/Config.css'%}">
+    <link rel = "stylesheet" href = "{% static '/css/all.css' %}">
+    <link rel = "stylesheet" href = "{% static '/css/fontawesome.css' %}">
+    <link rel = "stylesheet" href = "{% static '/css/material-icons.css' %}">
+</head>
+<body>
+    <div class = "body">
+        <div class = "container-fluid" style="padding:0% !important;">
+            <div class = "row">
+                <div class = "col-lg-12 col-md-12 col-sm-12 col-xs-12" id = "sidebar">
+                    <div id = "menuContainer">
+                        <nav class="navbar navbar-expand-lg" style="box-shadow:none !important;background-color:#E6FDFF !important;">
+                            <img class="navbar-brand" src = "{% static 'images/Logo2.png' %}" style="width:200px;"/>  
+                            <h1 style="margin-left:21%;font-family:'source sans pro' !important;">My Lingua: language platform</h1> 
+                                <ul class = "navbar-nav ml-auto" id = "menuPlace">
+                                    <li class = "nav-item LinkText">
+                                        <a  href = "#" class = "nav-link"> <p>Home</p></a>
+                                    </li>
+                                    <li class = "nav-item LinkText">
+                                        <a href = "#" class = "nav-link"><p>Login</p></a>
+                                    </li>
+                                  <li class = "nav-item LinkText">
+                                      <a href = "#" class = "nav-link"><p>About</p></a>
+                                  </li>
+                                  <li class = "nav-item LinkText">
+                                      <a href = "#" class = "nav-link"> <p>Contact</p></a>
+                                  </li>
+                             </ul>
+                            </div>+
+                        </nav>
+                    </div>
+            </div>
+               <div class = "col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                   {% block content %}
+                       
+                   {% endblock content %} 
+               </div>
+            </div>
+        </div>
+    </div>
+    <div class = "secondContent">
+        {% block SecondContent %}
+            
+        {% endblock SecondContent %} 
+    </div>
+    <script src = "{% static '/js/jquery-3.4.1.min.js' %}"></script>
+    <script src = "{% static '/js/bootstrap.min.js' %}"></script>
+    <script src = "{% static '/js/Config.js' %}"></script>
+</body>
