@@ -15,8 +15,6 @@ class HomePage(ListView):
         if request.user.is_staff:
             AdminForm = AdminFeedBackForm
             siteFeedback = InstructorFeedback.objects.filter(has_response=False)[:2]
-            
-
             return render(request, self.template_name, {'feedbacks': siteFeedback, 'stats':self.siteStats, 'adminForm':AdminForm})
         if request.user.is_instructor:
             return redirect('instructorHome')
@@ -41,7 +39,8 @@ class InstructorCreate(View):
     template_name = 'adminSite/instructor.html'
     def get(self, request):
          form = CustomUserCreationForm
-         return render(request, self.template_name, {'form':form})
+         availUser = UserProfile.objects.filter(is_instructor=True)
+         return render(request, self.template_name, {'form':form, 'users':availUser})
     def post(self, request):
           form = CustomUserCreationForm(request.POST)
           instructor = Instructor()
@@ -56,29 +55,25 @@ class InstructorCreate(View):
               instructor.instructor = addedInstructor
               instructor.save(self) 
           return redirect('home')
-class CourseCreateView(View):
+class CourseCreateView(UserPassesTestMixin, View):
     template_name = 'adminSite/course.html'
     model = Course
-    course_content = Course.objects.all()
+    course_content = Course.objects.all()[:4]
     context_object_name = 'courses'
     def get(self, request):
          form = CourseForm
          return render(request, self.template_name, {'form':form, 'courses':self.course_content,})
     def post(self, request):
-          form = CourseForm(request.POST)
-          if form.is_valid():
-              course = form.save(commit=False)   
-              #Cleaned (normalized data)
-              courseName = form.cleaned_data['courseName']
-              courseDescription = form.cleaned_data['courseDescription']
-            #   courseImage = form.cleaned_data['courseImage']
-              courseInstructor = form.cleaned_data['instructor']
-            #   course_obj.courseName = courseName
-            #   course_obj.courseDescription = courseDescription
-            #   course_obj.courseImage = courseImage
-            #   course_obj.instructor = courseInstructor
-              course.save()   
+          if request.POST.get('courseSubmit'):
+            form = CourseForm(request.POST, request.FILES)
+            if form.is_valid():
+                course = form.save(commit=False)   
+                #Cleaned (normalized data)
+                print(course)
+                course.save()   
           return redirect('course')
+    def test_func(self):
+        return self.request.user.is_staff
 class InstructorHomeView(UserPassesTestMixin, FormView):
     template_name = 'adminSite/instructorHome.html'
     model = Content
@@ -88,7 +83,8 @@ class InstructorHomeView(UserPassesTestMixin, FormView):
     def get(self, request):
         content_form = ContentForm
         feedback_form = FeedBackForm
-        return render(request, self.template_name, {'form':content_form, 'feedback':feedback_form})
+        teaches = Course.objects.filter(instructor=self.request.user.instructor)
+        return render(request, self.template_name, {'form':content_form, 'feedback':feedback_form, 'teaches':teaches})
     def post(self, request):
         if request.POST.get('content_btn'):
             form = ContentForm(request.POST, request.FILES)

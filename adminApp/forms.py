@@ -13,7 +13,7 @@ class CustomUserChangeForm(UserChangeForm):
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ['courseName', 'courseDescription', 'instructor']
+        fields = ['courseName', 'courseDescription', 'instructor', 'courseImage']
 
 class ContentForm(forms.ModelForm): 
     class Meta:

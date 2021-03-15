@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load myfilters %}
 {% block content %}
-<div class="row">
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="create"/>
-    </form>
+<div class="row justify-content-center loginRow">
+    <div class="col-lg-4" style='margin-top:13%;'>
+            {% csrf_token %}
+            <div class = "card" style="border-style:none !important; box-shadow:none !important;padding:15%;"> 
+                <div class = "card-body">
+                   <h2 class = "h2 card-title" style = "font-family:'source sans pro' !important;color:black;">Login to myLingua</h2>
+                   <form method="POST">
+                      {% csrf_token %}
+                      <div class = "form-group">
+                          <div class="row">
+                                 {%placeHolder form.username 'username' 'form-control loginStyle' %} 
+                           </div>      
+                      </div>
+                      <div class = "form-group">
+                        <div class="row">
+                               {%placeHolder form.password 'password' 'form-control loginStyle' %} 
+                         </div>      
+                    </div>
+                    <div class="row">
+                        <button type="submit" class='btn btn-green'>Login</button>
+                    </div>
+                  </form>
+            </div>
+       </div>
+    </div>
 </div>
 {% endblock content %}

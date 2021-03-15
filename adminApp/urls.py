@@ -8,4 +8,4 @@ urlpatterns = [
     path('add/instructor/', InstructorCreate.as_view(), name='newInstructor'),
     path('add/course', CourseCreateView.as_view(), name='course'),
     path('home/instructor', InstructorHomeView.as_view(), name='instructorHome')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   

@@ -80,3 +80,20 @@ body {
     background-color :white;
     padding:3%;
 }
+.courseControl {
+    border-bottom-style: solid !important; 
+    border-top-style: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-color: blue !important;
+    font-family:'Droid sans' !important;
+}
+.courseLable {
+    font-family:'Droid sans' !important;
+}
+.loginRow {
+    background-image: url(../images/BG.jpg);
+    background-size:cover;
+    background-position: center;
+    height:85vh;
+}

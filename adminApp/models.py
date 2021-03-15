@@ -23,6 +23,7 @@ class UserProfile(AbstractUser):
 
 class Instructor(models.Model):
     instructor = models.OneToOneField(UserProfile, on_delete=models.CASCADE, related_name='instructor', default='')
+    profile_pic = models.ImageField(upload_to='media/profilePics', default='')
     def __str__(self):
         return self.instructor.first_name + " " + self.instructor.last_name
 

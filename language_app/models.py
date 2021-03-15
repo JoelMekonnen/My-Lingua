@@ -12,9 +12,10 @@ class Preference(models.Model):
     accountType=models.CharField(max_length=200)
 class Course(models.Model):
     courseName=models.CharField(max_length=200)
-    #courseImage=models.FileField(upload_to='courseImages/', max_length=255, default='')
+    courseImage=models.FileField(upload_to='courseImages/', max_length=255, null=True)
     instructor=models.ForeignKey(Instructor, on_delete=models.CASCADE, related_name='course', null=True)
     courseDescription=models.TextField()
+
     
     def __str__(self):
         return self.courseName
