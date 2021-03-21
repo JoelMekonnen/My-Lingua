@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third party apps
+    'django_filters', 
+    # 'compositekey',  
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',

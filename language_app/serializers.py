@@ -1,22 +1,23 @@
 from rest_framework import serializers
-from .models import Student,Preference,Course,Content,Quiz,Certificate,Grade
+from .models import Student,Preference,Course,Content,Quiz,Certificate,Grade,Takes
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('id', 'first_name','last_name','email','username','prefId','courseId','quizId','certId','gradeId',)
+        fields = ('id', 'first_name','last_name','email','username')
 class PreferenceSerializer(serializers.ModelSerializer):
     class Meta:
         model=Preference
-        fields=('id','siteLang','startLevel','currLevel','accountType',)
+        fields=('id','userId','siteLang','currLevel','accountType','currContentId')
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model=Course
-        fields=('id','courseName','courseDescription','contents', 'courseImage')
+        fields=('id','courseName','courseDescription','courseImage')
 class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Content
-        fields=('id','contentValue','contentImage','contentAudio','contentVideo','isComplete',)
+        fields=('id','contentTitle','contentValue','contentImage','contentAudio','contentVideo','contentLevel')
+        # lookup_field='level'
 class QuizSerializer(serializers.ModelSerializer):
     class Meta:
         model=Quiz
@@ -28,4 +29,8 @@ class CertificateSerializer(serializers.ModelSerializer):
 class GradeSerializer(serializers.ModelSerializer):
     class Meta:
         model=Grade
-        fields=('id','courseId','userId','grade',)
+        fields=('id','courseId','grade',)
+class TakesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Takes
+        fields=('id','contentId','userId','isComplete')

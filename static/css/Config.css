@@ -37,18 +37,29 @@ body {
     font-weight: bold;
 }
 .buttonRow {
-    padding: 3%;
-    border-style:solid;
+    padding: 4%;
+    /* border-style:solid; */
     border-width: 1px;
-    border-color: #7300ff;
+    /* border-color: #7300ff; */
     border-radius: 30px;
     height: 200px;
     margin-top: 50px;
     margin-bottom: 50px;
-    margin-left: 20px;
+    margin-left: 50px;
 }
 .buttonRow i {
     font-size: 70px;
+}
+.buttonRow:hover{
+    background-color:#60b0f4;
+    color:black;
+}
+.buttonRow:hover div > h5 {
+    color:white;
+}
+.buttonRow > div > h5 {
+    font-family:'Droid sans' !important;
+    font-weight: bold;
 }
 .contentControl {
     border-color: #8403EE;

@@ -2,26 +2,7 @@
 {% load static %}
 {% load myfilters %}
 {% block content %}
-<div class="row">
-    <div class="col-lg-8">
-        <div class="row" style="margin-top:20%;">
-            {% for course in courses %}
-            <div class="col-lg-4" style="width:100%;">
-                <div class="card" style="width:300px;margin-left:20%;border-style:none;box-shadow:none;">
-                    <h1 style="text-align:center;font-family:'Droid sans' !important;">{{course.courseName}}</h1>
-                    <img src='{{ MEDIA_URL }}{{course.courseImage}}' height=200px width=300px/> 
-                    <div class="card-body"> 
-                        <p style="font-family:'Droid sans' !important;">{{course.courseDescription}}</p>
-                        <div class="row justify-content-center">
-                            <button type='submit' class='btn btn-blue'>Update</button>
-                            <button type='submit' class='btn btn-red'>delete</button>
-                     </div> 
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+<div class="row justify-content-center loginRow">
     <div class="col-lg-4">
         <div class="row">
             <form method="POST" enctype="multipart/form-data">

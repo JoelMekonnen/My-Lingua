@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+{% block content %}
+<div class="row">
+    {% for course in courses %}
+       <div class="col-lg-4" style="padding:5%;">
+           <div class="card">
+               <img class="card-img-top" src='{{ MEDIA_URL }}{{course.courseImage}}' alt="">
+               <div class="card-body">
+                   <h4 class="card-title">{{course.courseName}}</h4>
+                   <p class="card-text">{{course.courseDescription}}</p>
+               </div>
+               <div class="row">
+                   <div class="col-lg-6">
+                    <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-blue">Update</a>
+                   </div>
+                   <div class="col-lg-6">
+                    <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-red">Delete</a>
+                   </div>
+               </div>
+           </div>
+       </div>
+    {% endfor %}
+</div>
+{% endblock content %}

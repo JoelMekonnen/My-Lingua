@@ -5,7 +5,7 @@ from language_app.models import Course, Content
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model= UserProfile
-        fields= UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email' ,'is_student', 'is_instructor', 'is_adminstrator', )
+        fields= UserCreationForm.Meta.fields + ('first_name', 'last_name', 'email', 'is_instructor',)
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model=UserProfile

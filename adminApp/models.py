@@ -15,10 +15,11 @@ class SiteStats(models.Model):
         return str(self.logDate)
 
 class UserProfile(AbstractUser):
-    is_student = models.BooleanField(null=True)
+    #is_student = models.BooleanField(null=True)
     is_instructor = models.BooleanField(null=True)
-    is_adminstrator = models.BooleanField(null=True)
-    is_active = models.BooleanField(default=True)
+    
+    #is_adminstrator = models.BooleanField(null=True)
+    #is_active = models.BooleanField(default=True)
 
 
 class Instructor(models.Model):

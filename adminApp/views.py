@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 # Create your views here.
 from django.http import HttpResponse
 from django.views.generic import View, DetailView, ListView, CreateView, UpdateView, DeleteView
@@ -7,6 +8,7 @@ from .forms import CustomUserCreationForm, CourseForm, ContentForm, FeedBackForm
 from django.views.generic.edit import FormView
 from .models import SiteStats, Instructor, UserProfile, InstructorFeedback, AdminFeedback
 from language_app.models import Course, Content
+from .create_quiz import Converter
 class HomePage(ListView):
     model = SiteStats
     template_name = 'adminSite/index.html'
@@ -104,6 +106,50 @@ class InstructorHomeView(UserPassesTestMixin, FormView):
 
     def test_func(self):
         return self.request.user.is_instructor
+
+class CourseListView(ListView):
+    model = Course
+    template_name = 'adminSite/courseList.html'
+    context_object_name = 'courses'
+
+class CourseUpdateView(UpdateView):
+    model = Course
+    template_name = 'adminSite/updateList.html'
+    success_url = reverse_lazy('courseList')
+    fields = ['courseName', 'courseImage', 'courseDescription']
+    context_object_name = 'courses'
+
+class CreateQuiz(View):
+    template_name='adminSite/quiz.html'
+    nu = range(2)
+    choices = ['a', 'b', 'c', 'd']
+    questions = list()
+    def get(self, request):
+        return render(request, self.template_name, {'nu':self.nu, 'choices':self.choices})
+    def post(self, request):
+        fullQuestion = {}
+        if request.POST.get('btn_sub'):
+            # print(request.POST)
+            for quesNum in self.nu:
+                choose = dict()
+                questionVal = request.POST['question_' + str(quesNum)]
+                for choice in self.choices:
+                    
+                    print(str(quesNum) + choice)
+                    choose[choice] = request.POST.__getitem__(str(quesNum)+choice)
+                
+                fullQuestion[quesNum] = { 
+                        'question':questionVal,
+                        'choices': choose,
+                }
+            self.questions.append(fullQuestion)
+            myConvert = Converter(self.questions, 'output_1.json')
+            myConvert.convert()
+            myConvert.showVal()
+            return redirect('createQuiz')
+
+
+
 
 
 
