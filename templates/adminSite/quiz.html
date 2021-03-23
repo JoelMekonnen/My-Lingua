@@ -2,25 +2,63 @@
 {% load static %}
 {% load myfilters %}
 {% block content %}
-  <form method="POST">
-      {% csrf_token %}
-    {% for i in nu%}
-    <div class="row">
-        <lable>
-            Question number {{i}}
-        </lable>
-        <textarea type='text' name='question_{{i}}' rows=1 cols=40></textarea>
-    </div>
-        {% for choice in choices %}
-          
-            <div class="row">
-                <lable>{{choice}}</lable>
-                <input type="text" name='{{i}}{{choice}}'>
+     <div class="row">
+        <div class="col-lg-3" style="padding:5%;margin-top:70px">
+            <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
+                <div class="col-lg-2">
+                    <i class="material-icons" style="color:#8e8ee1;font-size:30px;">dashboard</i>
+                </div>
+                <div class="col-lg-10">
+                    <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Account pref</h5>
+                </div>
             </div>
-        {% endfor %}
-   
-     
-    {% endfor %}
-    <input type="submit" name='btn_sub'>
-</form>
+            <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
+             <div class="col-lg-2">
+                 <i class="material-icons" style="color:#bbe18e;;font-size:30px;">subject</i>
+             </div>
+             <div class="col-lg-10">
+                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Contents</h5>
+             </div>
+         </div>
+         <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
+             <div class="col-lg-2">
+                 <i class="material-icons" style="color:#e18e8e;;font-size:30px;text-align:center;">swap_vert</i>
+             </div>
+             <div class="col-lg-10">
+                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Quizzes</h5>
+             </div>
+         </div>
+         <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
+             <div class="col-lg-2">
+                 <i class="material-icons" style="color:red;font-size:30px;">feedback</i>
+             </div>
+             <div class="col-lg-10">
+                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Feedbacks</h5>
+             </div>
+         </div>
+        </div>
+         <div class="col-lg-9">
+             <div class="row justify-content-center">
+                {% for course in courses %}
+                <div class="col-lg-4" style='margin-top:10%;'>
+                    <div class="card" >
+                        <img class="card-img-top" height="300" src="{{MEDIA_URL}}{{course.courseImage}}" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title" style="text-align:center;font-family:'montserrat'; font-weight:700;">{{course.courseName}}</h4>
+                            <p class="card-text" style="text-align:center;font-family:'source sans pro'">{{course.courseDescription}}</p>
+                        </div>
+                        <hr/>
+                        <div class="row justify-content-center">
+                            <a href="{% url 'instructorHome' %}" class='btn btn-green'>manage content</a>
+                            <a href="{% url 'instructorHome' %}" class='btn btn-blue'>manage quiz</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+             </div>
+         </div>
+        
+         
+        
+     </div>
 {% endblock content %}

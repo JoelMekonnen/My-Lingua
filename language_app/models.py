@@ -37,7 +37,7 @@ class Preference(models.Model):
 class Quiz(models.Model):
     marks=models.IntegerField()
     courseId=models.ForeignKey(Course,on_delete=models.CASCADE)
-    questionDir=models.FilePathField(path='../Questions', max_length=100)
+    questionDir=models.FilePathField(path='Questions/', max_length=100)
     level = models.IntegerField(default=0)
     #answerDir=models.FilePathField(path='../Answers',max_length=100)
     #scored=models.IntegerField()    

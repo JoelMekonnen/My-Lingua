@@ -124,8 +124,11 @@ class CreateQuiz(View):
     nu = range(2)
     choices = ['a', 'b', 'c', 'd']
     questions = list()
+   
     def get(self, request):
-        return render(request, self.template_name, {'nu':self.nu, 'choices':self.choices})
+        courseList = Course.objects.filter(instructor=request.user.instructor)
+        return render(request, self.template_name, {'courses':courseList})
+        #return render(request, self.template_name, {'nu':self.nu, 'choices':self.choices})
     def post(self, request):
         fullQuestion = {}
         if request.POST.get('btn_sub'):
