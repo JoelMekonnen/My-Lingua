@@ -44,14 +44,24 @@ class Status(models.Model):
     currLevel=models.IntegerField(default=1)
     currContentId=models.IntegerField(default=1)
 
+
+
 class Quiz(models.Model):
     marks=models.IntegerField(null=True)
     courseId=models.ForeignKey(Course,on_delete=models.CASCADE)
     questionDir=models.FileField(upload_to='Questions/', max_length=100)
     level = models.IntegerField()
-    userId=models.ForeignKey(Student,on_delete=models.CASCADE,null=True)  
-    quizID = models.IntegerField(default=0)
+    quizID=models.IntegerField(default=1)
+    userId=models.ManyToManyField(Student,through='QuizTakes',through_fields=('quizId','userId'),)
 
+    def __str__(self):
+        return self.courseId.courseName + "_level_" + str(self.level)+ "_ID_" + str(self.quizID)
+class QuizTakes(models.Model):
+    class Meta:
+        unique_together=(('quizId','userId'))
+    quizId=models.ForeignKey(Quiz,on_delete=models.CASCADE,related_name='quiztakesId')
+    userId=models.ForeignKey(Student,on_delete=models.CASCADE,related_name='quiztakesId')
+    scored=models.IntegerField(null=True)
 class Certificate(models.Model):
     certDate=models.DateField(auto_now_add=True)
     certUrl=models.URLField(max_length=200)
@@ -69,5 +79,6 @@ class Takes(models.Model):
     contentId=models.ForeignKey(Content,on_delete=models.CASCADE,null=True,related_name='takesContentId')
     userId=models.ForeignKey(Student,on_delete=models.CASCADE,null=True,related_name='takesUserId')
     isComplete=models.BooleanField(default=False)
+    # statusTakes=models.IntegerField(default=2)
     def __str__(self):
         return str(self.userId.student.username)

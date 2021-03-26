@@ -1,7 +1,7 @@
 from django import	forms
 from django.contrib.auth.forms import UserCreationForm,	UserChangeForm
 from .models import UserProfile, Instructor, InstructorFeedback, AdminFeedback
-from language_app.models import Course, Content
+from language_app.models import Course, Content, Quiz
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model= UserProfile
@@ -30,6 +30,10 @@ class AdminFeedBackForm(forms.ModelForm):
         model = AdminFeedback
         fields = ['feedbackTitle', 'feedbackDescription']
 
+class QuizCreateForm(forms.ModelForm):
+    class Meta:
+        model = Quiz
+        fields = ['marks', 'level', 'quizID']
 # class UserProfileForm(forms.ModelForm):
 #     password = forms.PasswordInput()
 #     class Meta:

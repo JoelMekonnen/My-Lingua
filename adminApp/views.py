@@ -4,10 +4,10 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.views.generic import View, DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
-from .forms import CustomUserCreationForm, CourseForm, ContentForm, FeedBackForm, AdminFeedBackForm   
+from .forms import CustomUserCreationForm, CourseForm, ContentForm, FeedBackForm, AdminFeedBackForm, QuizCreateForm   
 from django.views.generic.edit import FormView
 from .models import SiteStats, Instructor, UserProfile, InstructorFeedback, AdminFeedback
-from language_app.models import Course, Content
+from language_app.models import Course, Content, Quiz
 from .create_quiz import Converter
 class HomePage(ListView):
     model = SiteStats
@@ -140,35 +140,58 @@ class CourseUpdateView(UpdateView):
 
 class CreateQuiz(View):
     template_name='adminSite/quizCreate.html'
-    nu = range(2)
-    choices = ['a', 'b', 'c', 'd']
-    questions = list()
-   
+    def __init__(self):
+        self.fullQuestion = {}
+        self.nu = []
+        self.marks = 0
+        self.numQuestions = 0
+        self.level = 0
+        self.choices = ['a', 'b', 'c', 'd']
+        self.questions = list()
+        self.quizID = 0
+        self.filename = ''
+        self.course = Course()
     def get(self, request, pk):
-        courseList = Course.objects.filter(instructor=request.user.instructor)
-        return render(request, self.template_name, {'courses':courseList})
+        formGen = QuizCreateForm
+        return render(request, self.template_name, {'form':formGen, 'page_1':True})
         #return render(request, self.template_name, {'nu':self.nu, 'choices':self.choices})
-    def post(self, request):
-        fullQuestion = {}
+    def post(self, request, pk):
+        if request.POST.get('btn_generate'):
+            numQuestions = int(request.POST['question_num'])
+            request.session['marks'] = int(request.POST['marks'])
+            request.session['numQuestions'] = int(request.POST['question_num'])
+            request.session['level'] = int(request.POST['level'])
+            request.session['quizID'] = int(request.POST['quizID'])
+            self.nu = range(numQuestions)
+            request.session['nu'] = numQuestions
+            return render(request, self.template_name, {'page_2':True, 'nu':self.nu, 'choices':self.choices})
         if request.POST.get('btn_sub'):
             # print(request.POST)
-            for quesNum in self.nu:
+            newQuiz = Quiz()
+            print(request.POST)
+            for quesNum in range(request.session['nu']):
                 choose = dict()
                 questionVal = request.POST['question_' + str(quesNum)]
                 for choice in self.choices:
-                    
                     print(str(quesNum) + choice)
                     choose[choice] = request.POST.__getitem__(str(quesNum)+choice)
-                
-                fullQuestion[quesNum] = { 
+                self.fullQuestion[quesNum] = { 
                         'question':questionVal,
                         'choices': choose,
                 }
-            self.questions.append(fullQuestion)
-            myConvert = Converter(self.questions, 'output_1.json')
+            self.questions.append(self.fullQuestion)
+            self.course = Course.objects.get(id=pk)
+            self.filename = self.course.courseName + "_level_"+ str(request.session['level']) + '_ID_' + str(request.session['quizID']) + ".json"
+            questionDir =   "Questions/" + self.filename
+            myConvert = Converter(self.questions, questionDir)
             myConvert.convert()
-            myConvert.showVal()
-            return redirect('createQuiz')
+            newQuiz.marks = request.session['marks']
+            newQuiz.level = request.session['level']
+            newQuiz.courseId = self.course
+            newQuiz.questionDir = questionDir
+            newQuiz.quizID = request.session['quizID']
+            newQuiz.save()
+            return redirect('home')
 
 
 
