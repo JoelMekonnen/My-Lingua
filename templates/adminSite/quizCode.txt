@@ -1,0 +1,35 @@
+ <form method="POST">
+      {% csrf_token %}
+    {% for i in nu%}
+    <div class="row">
+        <lable>
+            Question number {{i}}
+        </lable>
+        <textarea type='text' name='question_{{i}}' rows=1 cols=40></textarea>
+    </div>
+        {% for choice in choices %}
+          
+            <div class="row">
+                <lable>{{choice}}</lable>
+                <input type="text" name='{{i}}{{choice}}'>
+            </div>
+        {% endfor %}
+   
+     
+    {% endfor %}
+    <input type="submit" name='btn_sub'>
+</form>
+ <div class = "form-group">
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                            <label for = "id_contentValue"><i class="material-icons" style="font-size:30px;">library_books</i></label>
+                                        </div>
+                                        <div class="col-lg-11">
+                                            <select name="course" placeholder="course" class="form-control contentControl" id="id_course">
+                                                {% for teach in teaches %}
+                                                    <option value='{{teach.id}}'>{{teach.courseName}}</option>
+                                                {% endfor %}
+                                              </select>
+                                        </div>
+                                    </div>
+                                 </div>

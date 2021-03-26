@@ -28,3 +28,11 @@ class ReadOnly(permissions.BasePermission):
             if request.method in permissions.SAFE_METHODS:
                 return True
         return False
+class ReadOnlyOrIsInstructor(permissions.BasePermission):
+    def has_permission(self,request,view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        try:
+            return request.user.is_instructor
+        except Exception:
+            return None

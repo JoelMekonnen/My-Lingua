@@ -49,13 +49,16 @@
                         </div>
                         <hr/>
                         <div class="row justify-content-center">
-                            <a href="{% url 'instructorHome' %}" class='btn btn-green'>manage content</a>
-                            <a href="{% url 'instructorHome' %}" class='btn btn-blue'>manage quiz</a>
+                            <a href="{% url 'contentCreate' course.pk %}" class='btn btn-green'>manage content</a>
+                            <a href="{% url 'quizCreate' course.pk %}" class='btn btn-blue'>manage quiz</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
              </div>
          </div>
+        
+         
+        
      </div>
 {% endblock content %}

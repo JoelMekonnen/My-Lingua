@@ -76,24 +76,36 @@ class CourseCreateView(UserPassesTestMixin, View):
           return redirect('course')
     def test_func(self):
         return self.request.user.is_staff
-class InstructorHomeView(UserPassesTestMixin, FormView):
-    template_name = 'adminSite/instructorHome.html'
+class ContentCreateView(UserPassesTestMixin, FormView):
+    template_name = 'adminSite/ContentCreate.html'
     model = Content
-    fields = ['contentValue', 'contentImage', 'contentVideo', 'contentAudio', 'course']
-    form_class = ContentForm
-    success_url = 'content'
-    def get(self, request):
+    fields = ['contentValue', 'contentImage', 'contentVideo', 'contentAudio', 'courseId', 'contentLevel', 'selfID']
+    #form_class = ContentForm
+    #success_url = 'contentCreate'
+    courseSelected = Course()
+    def get(self, request, pk):
         content_form = ContentForm
         feedback_form = FeedBackForm
         teaches = Course.objects.filter(instructor=self.request.user.instructor)
+        self.courseSelected = Course.objects.get(id=pk)
         return render(request, self.template_name, {'form':content_form, 'feedback':feedback_form, 'teaches':teaches})
-    def post(self, request):
+    def post(self, request, pk):
         if request.POST.get('content_btn'):
-            form = ContentForm(request.POST, request.FILES)
-            if form.is_valid():
-                content = form.save(commit=False)  
+            Mainform = ContentForm(request.POST, request.FILES)
+            print(request.POST)
+            print(request.FILES)
+            if Mainform.is_valid():
+                print('Form is valid')
+                content = Mainform.save(commit=False)  
                 #Cleaned (normalized data)
+                courseSelected = Course.objects.get(id=pk)
+                content.createdBy = request.user.instructor
+                content.courseId = courseSelected
+                print(request.POST)
                 content.save()
+            else:
+                print('form is not valid')
+            return redirect('instructorHome')
         if request.POST.get('feedback_btn'):
             form = FeedBackForm(request.POST)
             if form.is_valid():
@@ -106,7 +118,14 @@ class InstructorHomeView(UserPassesTestMixin, FormView):
 
     def test_func(self):
         return self.request.user.is_instructor
-
+class InstructorHomeView(UserPassesTestMixin, View):
+    template_name = 'adminSite/homepage_ins.html'
+    def get(self, request):
+        courseList = Course.objects.filter(instructor=self.request.user.instructor)
+        return render(request, self.template_name, {'courses':courseList})
+    def test_func(self):
+        return self.request.user.is_instructor
+    
 class CourseListView(ListView):
     model = Course
     template_name = 'adminSite/courseList.html'
@@ -120,12 +139,12 @@ class CourseUpdateView(UpdateView):
     context_object_name = 'courses'
 
 class CreateQuiz(View):
-    template_name='adminSite/quiz.html'
+    template_name='adminSite/quizCreate.html'
     nu = range(2)
     choices = ['a', 'b', 'c', 'd']
     questions = list()
    
-    def get(self, request):
+    def get(self, request, pk):
         courseList = Course.objects.filter(instructor=request.user.instructor)
         return render(request, self.template_name, {'courses':courseList})
         #return render(request, self.template_name, {'nu':self.nu, 'choices':self.choices})

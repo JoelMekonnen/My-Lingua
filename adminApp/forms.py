@@ -18,7 +18,7 @@ class CourseForm(forms.ModelForm):
 class ContentForm(forms.ModelForm): 
     class Meta:
         model = Content
-        fields = ['contentValue', 'contentImage', 'contentVideo', 'contentAudio', 'course']
+        fields = ['contentTitle','contentValue', 'contentImage', 'contentVideo', 'contentAudio','contentLevel', 'selfID',]
 
 class FeedBackForm(forms.ModelForm):
     class Meta:
