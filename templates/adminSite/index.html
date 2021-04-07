@@ -1,89 +1,91 @@
-{% extends 'base.html' %}
+{% extends 'sidebar.html' %}
 {% load static %}
 {% load myfilters %}
-{% block content %}
-<div class="row">
-   <div class = "col-lg-4" style="background-color:#e6fdff">
-      {% for feedback in feedbacks  %}
-         {% if not feedback.has_response %}
-          <div class="feedbackRow">
-            <h3>{{feedback.feedbackTitle }}</h3>
-            <p>{{feedback.feedbackDescription}}</p>
-            <h5>issued by: {{feedback.createdBy.instructor.username}}</h5>
-             <hr> 
-            <form method="POST">
-               <input type="hidden" name="response" value="{{feedback.id}}"/>
-               {% csrf_token %}
-               <div class="form-group">
-                  {%placeHolder adminForm.feedbackTitle 'Subject' 'form-control adminFeedback' %} 
-               </div>
-               <div class="form-group">
-                  {%placeHolder adminForm.feedbackDescription 'Subject' 'form-control adminFeedback' %} 
-               </div>
-               <input type ="submit" name='btn_{{feedback.id}}' value='submit'/>
-            </form>
-          </div>
-         {% endif %}
-      {% endfor %}
-   </div>
-   <div class="col-lg-8 ml-auto" style="margin-top:100px;">
-        <div class="container">
-           <div class="row justify-content-center">
-              <div class="col-lg-3 statsRow" style="margin-top:30px;">
-                   <h3 class = "bigNumber">{{stats.stdCount}}</h3> <br/>
-                   <h4 class = "bigNumberSub"> Student Count </h4>
-              </div>
-              <div class="col-lg-3 statsRow" style="margin-top:30px;">
-               <h3 class = "bigNumber">{{stats.courseCount}}</h3> <br/>
-               <h4 class = "bigNumberSub"> Course Count </h4>
-             </div>
-             <div class="col-lg-3 statsRow" style="margin-top:30px;">
-               <h3 class = "bigNumber">{{stats.insCount}}</h3> <br/>
-               <h4 class = "bigNumberSub"> Instructor Count </h4>
-          </div>
-         </div>
-          <div class="row justify-content-center">
-            <div class="col-lg-3 statsRow" style="margin-top:30px;">
-               <h3 class = "bigNumber">{{stats.certCount}}</h3> <br/>
-               <h4 class = "bigNumberSub"> Certificate Count </h4>
-          </div>
-          </div>
-          <div class = "row justify-content-center">
-               <div class = "col-lg-3 buttonRow">
-                  <div class = "row justify-content-center">
-                     <img src = '{% static "images/Pratices.png" %}' width = "70px" height="70px"/>
-                  </div>
-                  
-                  <div class="row justify-content-center">
-                     <h5><a href="{% url 'courseList' %}" style='text-decoration:none;color:black;'>Courses </a> </h5>
-                  </div>
-               </div>
-            
-               <div class = "col-lg-3 buttonRow">
-                  <div class = "row justify-content-center">
-                     <img src = '{% static "images/Progress.png" %}' width = "70px" height="70px"/>
-                  </div>
-                  <div class="row justify-content-center">
-                     <h5> user management</h5>
-                  </div>
-                  </a> 
-               </div>
-               <div class = "col-lg-3 buttonRow">
-                  <div class = "row justify-content-center">
-                     <img src = '{% static "images/certificates.png" %}' width = "70px" height="70px"/>
-                  </div>
-                  <div class="row justify-content-center">
-                     <h5> site management</h5>
-                  </div>
-                   
-               </div>
-          </div>
+{% block sidebarContent %}
+        <div class="row" style="padding:5%;">
+           <div class="row">
+               <h1 style="font-size:30px;font-weight:bold;">Courses</h1>
            </div>
-   </div>
-   </div>
-</div>
-    
-{% endblock content %}
+           <div class="row">
+            {% for course in courses %}
+            <div class="col-lg-4">
+                <div class="card">
+                   <img class="card-img-top" src="{{MEDIA_URL}}/{{course.courseImage}}" alt="course Image" style="width:200px; height:100px;margin-left:25%;">
+                   <div class="card-body">
+                      <h4 class="card-title">{{course.courseName}}</h4>
+                      <p class="card-text">{{course.courseDescription}}</p>
+                      <h4>instructor: {{course.instructor.instructor.username}}</h4>
+                   </div>
+                </div>
+            </div>
+            {% endfor %}
+           </div>
+        </div> 
+        <div class="row">
+           <div class="col-lg-6">
+              <div class="row" style="width:100%;">
+               <div class="row" style="width:100%;">
+                  <h1 style="font-size:30px;font-weight:bold; margin-left:75px;">Instructor</h1>
+              </div>
+                <div class="col-lg-12" style="width:100%;margin-left:30px;">
+                  <div class="card" style="margin-left:20px;">
+                     <div class="card-body">
+                      <table class="table">
+                         <thead class="thead-dark">
+                            <tr> 
+                               <th scope="col"><h5>username</h5></th>
+                               <th scope="col"><h5>first name</h5></th>
+                               <th scope="col"><h5>last name</h5></th>
+                               <th scope="col"><h5>email</h5></th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                               {% for instructor in instructors %}
+                               <tr>  
+                                   <td><p style="font-size:20px;">{{instructor.instructor.username}}</p></td>
+                                   <td><p style="font-size:20px;">{{instructor.instructor.first_name}}</p></td>
+                                   <td><p style="font-size:20px;">{{instructor.instructor.last_name}}</p></td>
+                                   <td><p style="font-size:20px;">{{instructor.instructor.email}}</p></td>
+                               </tr>
+                               {% endfor %}
+                         </tbody>
+                      </table>
+                     </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+               <div class="row">
+                  <h1 style="font-size:30px;font-weight:bold;margin-left:30px;">feedbacks</h1>
+               </div>
+               <div class="row" style="width:100%;">
+                  {% for feedback in feedbacks  %}
+                     {% if not feedback.has_response %}
+                       <div class="col-lg-12">
+                        <div class="card">
+                           <div class="card-body">
+                              <h3 style="font-size:25px;font-weight:500;"><span style="color:grey;font-size:20px;">subject:</span> <br>{{feedback.feedbackTitle }}</h3>
+                              <hr>
+                              <span style="color:grey;font-size:20px;">body:</span> <br>
+                              <p style="font-size:20px;font-style:italic;">{{feedback.feedbackDescription}}</p>
+                              <hr>
+                              <span style="color:grey;font-size:20px;">issued by:</span> <br>
+                              <h5> {{feedback.createdBy.instructor.email}}</h5>
+                           </div>
+                        </div>
+                        <hr>  
+                     </div>
+                  {% endif %}
+                {% endfor %}
+               </div>
+            </div>
+      </div>
+      <script>
+         var home = document.getElementById('Home');
+         home.classList.add('activate');
+    </script>
+{% endblock sidebarContent %}
 <!-- <h1> {{stats.stdCount}} </h1>
         <h1>{{stats.courseCount}}</h1>
         <h1>{{stats.insCount}}</h1>

@@ -17,9 +17,13 @@ class HomePage(ListView):
         if request.user.is_staff:
             AdminForm = AdminFeedBackForm
             siteFeedback = InstructorFeedback.objects.filter(has_response=False)[:2]
-            return render(request, self.template_name, {'feedbacks': siteFeedback, 'stats':self.siteStats, 'adminForm':AdminForm})
+            courseTaken = Course.objects.all()[:3]
+            instructors = Instructor.objects.all()[:4]
+            return render(request, self.template_name, {'feedbacks': siteFeedback, 'stats':self.siteStats, 'adminForm':AdminForm, 'courses':courseTaken, 'instructors':instructors})
         if request.user.is_instructor:
             return redirect('instructorHome')
+        if request.user.is_annonymus:
+            pass
     def post(self, request):
         adminResponseId = int(request.POST['response'])
         form = AdminFeedBackForm(request.POST)
