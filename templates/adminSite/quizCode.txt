@@ -33,3 +33,95 @@
                                         </div>
                                     </div>
                                  </div>
+==============================================================================================================================================
+ {% for feedback in feedbacks  %}
+         {% if not feedback.has_response %}
+          <div class="feedbackRow">
+            <h3>{{feedback.feedbackTitle }}</h3>
+            <p>{{feedback.feedbackDescription}}</p>
+            <h5>issued by: {{feedback.createdBy.instructor.username}}</h5>
+             <hr> 
+            <form method="POST">
+               <input type="hidden" name="response" value="{{feedback.id}}"/>
+               {% csrf_token %}
+               <div class="form-group">
+                  {%placeHolder adminForm.feedbackTitle 'Subject' 'form-control adminFeedback' %} 
+               </div>
+               <div class="form-group">
+                  {%placeHolder adminForm.feedbackDescription 'Subject' 'form-control adminFeedback' %} 
+               </div>
+               <input type ="submit" name='btn_{{feedback.id}}' value='submit'/>
+            </form>
+          </div>
+         {% endif %}
+      {% endfor %}
+=====================================================================================================================================================
+ <div class = "row justify-content-center">
+         <div class = "col-lg-3 buttonRow">
+            <div class = "row justify-content-center">
+               <img src = '{% static "images/Pratices.png" %}' width = "70px" height="70px"/>
+            </div>
+            <div class="row justify-content-center">
+               <h5><a href="{% url 'courseList' %}" style='text-decoration:none;color:black;'>Courses </a> </h5>
+            </div>
+         </div>
+      
+         <div class = "col-lg-3 buttonRow">
+            <div class = "row justify-content-center">
+               <img src = '{% static "images/Progress.png" %}' width = "70px" height="70px"/>
+            </div>
+            <div class="row justify-content-center">
+               <h5> user management</h5>
+            </div>
+            </a> 
+         </div>
+         <div class = "col-lg-3 buttonRow">
+            <div class = "row justify-content-center">
+               <img src = '{% static "images/certificates.png" %}' width = "70px" height="70px"/>
+            </div>
+            <div class="row justify-content-center">
+               <h5> site management</h5>
+            </div>
+             
+         </div>
+===============================================================================================================================================================
+ <div class="container">
+           <div class="row justify-content-center">
+              <div class="col-lg-3 statsRow" style="margin-top:30px;">
+                   <h3 class = "bigNumber">{{stats.stdCount}}</h3> <br/>
+                   <h4 class = "bigNumberSub"> Students </h4>
+              </div>
+              <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.courseCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Courses </h4>
+             </div>
+             <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.insCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Instructors </h4>
+          </div>
+         </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-3 statsRow" style="margin-top:30px;">
+               <h3 class = "bigNumber">{{stats.certCount}}</h3> <br/>
+               <h4 class = "bigNumberSub"> Certificates </h4>
+          </div>
+          </div>
+         
+           </div>
+   </div>
+===========================================================================================================================================================================
+{% for course in courses %}
+       <div class="col-lg-4" style="padding:5%;">
+           <div class="card">
+               <img class="card-img-top" src='{{ MEDIA_URL }}{{course.courseImage}}' alt="" height="200px;">
+               <div class="card-body">
+                   <h4 class="card-title">{{course.courseName}}</h4>
+                   <p class="card-text">{{course.courseDescription}}</p>
+               </div>
+               <div class="row justify-content-center">
+                    <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-blue">Update</a>
+                    <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-red">Delete</a>
+               </div>
+           </div>
+       </div>
+    {% endfor %}

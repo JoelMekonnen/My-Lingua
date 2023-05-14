@@ -1,2 +1,67 @@
+{% extends 'base.html' %}
 {% load static %}
-{% block  }
+{% load myfilters %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-2" style="height:100vh;background-image: linear-gradient(180deg, #60B0F4, #66def0);">
+      <div class="row sidebarHover" id ="Home" style="padding:15px;margin-top:250px;">
+         <div class="col-lg-2">
+              <i class="material-icons" style="font-size:30px; color:black;">home</i>
+         </div>
+         <div class="col-lg-10">
+              <a href="{% url 'home'  %}">
+               <p style="color:black; font-size:20px;font-weight:bold;">Home</p>
+               </a>
+         </div>
+      </div>
+         <div class="row sidebarHover" id="course" style="padding:15px;">
+            <div class="col-lg-2">
+                 <i class="material-icons" style="font-size:30px; color:black;">g_translate</i>
+            </div>
+            <div class="col-lg-10">
+                 <a href = "{% url 'courseList' %}">
+                      <p style="color:black; font-size:20px;font-weight:bold;">Courses</p>
+                </a>
+            </div>
+         </div>
+         <div class="row sidebarHover" id="instructor" style="padding:15px;">
+            <div class="col-lg-2">
+                 <i class="material-icons" style="font-size:30px; color:black;">supervisor_account</i>
+            </div>
+            <div class="col-lg-10">
+                 <a href="{% url 'newInstructor' %}">
+                     <p style="color:black; font-size:20px;font-weight:bold;">Instructors</p>
+                 </a>
+            </div>
+         </div>
+         <div class="row sidebarHover" style="padding:15px;">
+            <div class="col-lg-2">
+                 <i class="material-icons" style="font-size:30px; color:black;">subject</i>
+            </div>
+            <div class="col-lg-10">
+                 <p style="color:black; font-size:20px;font-weight:bold;">Feedbacks</p>
+            </div>
+         </div>
+         <div class="row sidebarHover" style="padding:15px;">
+            <div class="col-lg-2">
+                 <i class="material-icons" style="font-size:30px; color:black;">person</i>
+            </div>
+            <div class="col-lg-10">
+                 <p style="color:black; font-size:20px;font-weight:bold;">User Accounts</p>
+            </div>
+         </div>
+         <div class="row sidebarHover" style="padding:15px;">
+            <div class="col-lg-2">
+                 <i class="material-icons" style="font-size:30px; color:black;">account_circle</i>
+            </div>
+            <div class="col-lg-10">
+                 <p style="color:black; font-size:20px;font-weight:bold;">My account</p>
+            </div>
+         </div>
+    </div>
+    <div class="col-lg-10">
+        {%block sidebarContent %}
+
+        {%endblock sidebarContent %}
+    </div>
+    {% endblock content%}

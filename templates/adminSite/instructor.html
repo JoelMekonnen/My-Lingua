@@ -1,14 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'sidebar.html' %}
 {% load static %}
 {% load myfilters %}
-{% block content %}
-<div class="row justify-content-center loginRow">
-    <div class="col-lg-4">
+{% block sidebarContent %}
+<div class="row justify-content-center loginRow" style="height:100vh;">
+    <div class="col-lg-4" style="margin-top:10px;">
         <form method="POST">
             {% csrf_token %}
             <div class = "card" style="border-style:none !important; box-shadow:none !important;padding:15%;"> 
                 <div class = "card-body">
-                   <h2 class = "h2 card-title" style = "font-family:'source sans pro' !important;color:black; text-align:center;">Create Instructor</h2>
+                   <h2 class = "h2 card-title" style = "font-family:inherit !important;color:black; text-align:center;">Create Instructor</h2>
                    <hr/>
                    <form method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
@@ -58,7 +58,9 @@
             <input type="submit" name='courseSubmit' class='btn btn-green' value="create"/>
         </form>
     </div>
-   
 </div>
- 
-{%endblock content %}
+<script>
+    var ins = document.getElementById('instructor');
+    ins.classList.add('activate');
+</script>
+{%endblock sidebarContent %}

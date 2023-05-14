@@ -9,7 +9,7 @@
                     <i class="material-icons" style="color:#8e8ee1;font-size:30px;">dashboard</i>
                 </div>
                 <div class="col-lg-10">
-                    <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;"><a href="{% url 'accUpdate' request.user.pk%}""> Account pref </a></h5>
+                    <h5 style="font-family:inherit !important;font-weight:600;text-align:center;">Account pref</h5>
                 </div>
             </div>
             <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
@@ -17,7 +17,7 @@
                  <i class="material-icons" style="color:#bbe18e;;font-size:30px;">subject</i>
              </div>
              <div class="col-lg-10">
-                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Contents</h5>
+                 <h5 style="font-family:inherit !important;font-weight:600;text-align:center;">Contents</h5>
              </div>
          </div>
          <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
@@ -25,7 +25,7 @@
                  <i class="material-icons" style="color:#e18e8e;;font-size:30px;text-align:center;">swap_vert</i>
              </div>
              <div class="col-lg-10">
-                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Quizzes</h5>
+                 <h5 style="font-family:inherit !important;font-weight:600;text-align:center;">Quizzes</h5>
              </div>
          </div>
          <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
@@ -33,7 +33,7 @@
                  <i class="material-icons" style="color:red;font-size:30px;">feedback</i>
              </div>
              <div class="col-lg-10">
-                 <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Feedbacks</h5>
+                 <h5 style="font-family:inherit !important;font-weight:600;text-align:center;">Feedbacks</h5>
              </div>
          </div>
         </div>
@@ -44,8 +44,8 @@
                     <div class="card" >
                         <img class="card-img-top" height="300" src="{{MEDIA_URL}}{{course.courseImage}}" alt="">
                         <div class="card-body">
-                            <h4 class="card-title" style="text-align:center;font-family:'montserrat'; font-weight:700;">{{course.courseName}}</h4>
-                            <p class="card-text" style="text-align:center;font-family:'source sans pro'">{{course.courseDescription}}</p>
+                            <h4 class="card-title" style="text-align:center;font-family:inherit; font-weight:700;">{{course.courseName}}</h4>
+                            <p class="card-text" style="text-align:center;font-family:inherit">{{course.courseDescription}}</p>
                         </div>
                         <hr/>
                         <div class="row justify-content-center">
