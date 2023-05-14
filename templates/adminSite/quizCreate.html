@@ -3,8 +3,8 @@
 {% load myfilters %}
 {% block content %}
 {% if page_1 %}
-  <div class="row justify-content-center" style="margin-top:15%;">
-      <div class="col-lg-4">
+  <div class="row justify-content-center loginRow">
+      <div class="col-lg-4" style="margin-top:13%;">
         <form method="POST">
             {% csrf_token %}
             <div class="card">
@@ -67,14 +67,23 @@
           Question number {{i}}
       </lable>
       <textarea type='text' name='question_{{i}}' rows=1 cols=40></textarea>
-  </div>
-      {% for choice in choices %}
-        
+      </div>
+      {% for choice in choices %} 
           <div class="row">
               <lable>{{choice}}</lable>
               <input type="text" name='{{i}}{{choice}}'>
           </div>
       {% endfor %}
+      <lable>
+        Answer 
+      </lable>
+    <select name="answer_{{i}}" id="">
+        {% for choice in choices %}
+           <option value='{{choice}}'>
+               {{choice}}
+           </option>
+        {% endfor %}
+    </select>
   {% endfor %}
   <input type="submit" name='btn_sub'>
 </form>

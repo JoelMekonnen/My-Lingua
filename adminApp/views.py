@@ -9,6 +9,8 @@ from django.views.generic.edit import FormView
 from .models import SiteStats, Instructor, UserProfile, InstructorFeedback, AdminFeedback
 from language_app.models import Course, Content, Quiz
 from .create_quiz import Converter
+from django.conf import settings
+import os
 class HomePage(ListView):
     model = SiteStats
     template_name = 'adminSite/index.html'
@@ -172,26 +174,35 @@ class CreateQuiz(View):
             for quesNum in range(request.session['nu']):
                 choose = dict()
                 questionVal = request.POST['question_' + str(quesNum)]
+                answerVal = request.POST['answer_' + str(quesNum)]
                 for choice in self.choices:
                     print(str(quesNum) + choice)
                     choose[choice] = request.POST.__getitem__(str(quesNum)+choice)
                 self.fullQuestion[quesNum] = { 
                         'question':questionVal,
                         'choices': choose,
+                        'answer': answerVal,
                 }
             self.questions.append(self.fullQuestion)
             self.course = Course.objects.get(id=pk)
             self.filename = self.course.courseName + "_level_"+ str(request.session['level']) + '_ID_' + str(request.session['quizID']) + ".json"
-            questionDir =   "Questions/" + self.filename
+            questionDir =   str(settings.BASE_DIR) + '/media/Questions/' + self.filename
+            questionOutput = 'Questions/' + self.filename
             myConvert = Converter(self.questions, questionDir)
             myConvert.convert()
             newQuiz.marks = request.session['marks']
             newQuiz.level = request.session['level']
             newQuiz.courseId = self.course
-            newQuiz.questionDir = questionDir
+            newQuiz.questionDir = questionOutput
             newQuiz.quizID = request.session['quizID']
             newQuiz.save()
             return redirect('home')
+
+class AccountPref(UpdateView):
+    model = UserProfile
+    template_name = 'adminSite/updateAdmin.html'
+    fields = ['username', 'email', 'first_name', 'last_name']
+
 
 
 

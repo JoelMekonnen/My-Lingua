@@ -9,7 +9,7 @@
                     <i class="material-icons" style="color:#8e8ee1;font-size:30px;">dashboard</i>
                 </div>
                 <div class="col-lg-10">
-                    <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;">Account pref</h5>
+                    <h5 style="font-family:'Droid sans' !important;font-weight:600;text-align:center;"><a href="{% url 'accUpdate' request.user.pk%}""> Account pref </a></h5>
                 </div>
             </div>
             <div class="row" style="border-bottom:solid;border-width:1px;margin-top:30px;margin-bottom:30px;">
@@ -57,8 +57,6 @@
                 {% endfor %}
              </div>
          </div>
-        
-         
-        
+
      </div>
 {% endblock content %}

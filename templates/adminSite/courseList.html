@@ -2,25 +2,32 @@
 {% load static %}
 {% load myfilters %}
 {% block content %}
-<div class="row">
+<div class="row" style="padding:5%;">
     {% for course in courses %}
        <div class="col-lg-4" style="padding:5%;">
            <div class="card">
-               <img class="card-img-top" src='{{ MEDIA_URL }}{{course.courseImage}}' alt="">
+               <img height="300px" class="card-img-top" src='{{ MEDIA_URL }}{{course.courseImage}}' alt="">
                <div class="card-body">
-                   <h4 class="card-title">{{course.courseName}}</h4>
-                   <p class="card-text">{{course.courseDescription}}</p>
+                   <h4 class="card-title" style="text-align:center;font-family:'montserrat';">{{course.courseName}}</h4>
+                   <p class="card-text" style="text-align:center;font-family:'source sans pro';">{{course.courseDescription}}</p>
                </div>
-               <div class="row">
-                   <div class="col-lg-6">
+               <div class="row justify-content-center">
                     <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-blue">Update</a>
-                   </div>
-                   <div class="col-lg-6">
                     <a href="{% url 'courseUpdate' course.pk %}" class = "btn btn-red">Delete</a>
-                   </div>
                </div>
            </div>
        </div>
     {% endfor %}
+    <div class="col-lg-4" style="padding:5%;">
+        <a href="{% url 'course' %}">
+                    <h4 style="text-align:center;"> <i class="material-icons" style="font-size:40px;">addchart</i> </h4> 
+                    <h4>Add Course</h4>
+                </a>
+        </div>
+            
+    </div>
+     
 </div>
+
+
 {% endblock content %}
